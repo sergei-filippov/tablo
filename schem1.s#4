@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.6.3">
+<eagle version="8.6.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -112,9 +112,9 @@
 <circle x="-5.08" y="5.08" radius="2.54" width="0.1524" layer="88"/>
 <circle x="-12.7" y="-5.08" radius="2.54" width="0.1524" layer="88"/>
 <circle x="-5.08" y="-5.08" radius="2.54" width="0.1524" layer="88"/>
-<text x="-25.4" y="81.28" size="1.778" layer="88">GND</text>
-<text x="-25.4" y="73.66" size="1.778" layer="88">GND</text>
-<text x="-25.4" y="66.04" size="1.778" layer="88">GND</text>
+<text x="-25.4" y="73.66" size="1.778" layer="88">VIN</text>
+<text x="-25.4" y="66.04" size="1.778" layer="88">VIN</text>
+<text x="-25.4" y="81.28" size="1.778" layer="88">VIN</text>
 </plain>
 <moduleinsts>
 <moduleinst name="HEF4050BT1" module="HEF4050BT" x="66.04" y="45.72"/>
@@ -135,6 +135,31 @@
 <bus name="B$3">
 <segment>
 <wire x1="-12.7" y1="66.04" x2="-5.08" y2="66.04" width="0.762" layer="92"/>
+<wire x1="-5.08" y1="66.04" x2="-2.54" y2="63.5" width="0.762" layer="92"/>
+<wire x1="-2.54" y1="63.5" x2="48.26" y2="63.5" width="0.762" layer="92"/>
+<wire x1="48.26" y1="63.5" x2="48.26" y2="25.4" width="0.762" layer="92"/>
+<wire x1="48.26" y1="25.4" x2="53.34" y2="25.4" width="0.762" layer="92"/>
+<wire x1="53.34" y1="25.4" x2="53.34" y2="35.56" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$4">
+<segment>
+<wire x1="-12.7" y1="-5.08" x2="-5.08" y2="-5.08" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$5">
+<segment>
+<wire x1="-12.7" y1="5.08" x2="-5.08" y2="5.08" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$6">
+<segment>
+<wire x1="-12.7" y1="15.24" x2="-5.08" y2="15.24" width="0.762" layer="92"/>
+</segment>
+</bus>
+<bus name="B$7">
+<segment>
+<wire x1="-12.7" y1="25.4" x2="-5.08" y2="25.4" width="0.762" layer="92"/>
 </segment>
 </bus>
 </busses>

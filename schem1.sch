@@ -85,6 +85,42 @@
 </sheet>
 </sheets>
 </module>
+<module name="HEF4794BT" prefix="" dx="45.72" dy="20.32">
+<ports>
+<port name="VIN" side="top" coord="-20.32" direction="io"/>
+<port name="OE" side="top" coord="-15.24" direction="io"/>
+<port name="QP4" side="top" coord="-10.16" direction="io"/>
+<port name="QP5" side="top" coord="-5.08" direction="io"/>
+<port name="QP6" side="top" coord="0" direction="io"/>
+<port name="QP7" side="top" coord="5.08" direction="io"/>
+<port name="QS2" side="top" coord="12.7" direction="io"/>
+<port name="QS1" side="top" coord="17.78" direction="io"/>
+<port name="GND" side="bottom" coord="20.32" direction="io"/>
+<port name="QP3" side="bottom" coord="12.7" direction="io"/>
+<port name="QP2" side="bottom" coord="7.62" direction="io"/>
+<port name="QP1" side="bottom" coord="2.54" direction="io"/>
+<port name="QP0" side="bottom" coord="-2.54" direction="io"/>
+<port name="CP" side="bottom" coord="-7.62" direction="io"/>
+<port name="D" side="bottom" coord="-12.7" direction="io"/>
+<port name="STR" side="bottom" coord="-20.32" direction="io"/>
+</ports>
+<variantdefs>
+</variantdefs>
+<parts>
+</parts>
+<sheets>
+<sheet>
+<plain>
+</plain>
+<instances>
+</instances>
+<busses>
+</busses>
+<nets>
+</nets>
+</sheet>
+</sheets>
+</module>
 </modules>
 <parts>
 </parts>
@@ -115,10 +151,10 @@
 <text x="-25.4" y="73.66" size="1.778" layer="88">VIN</text>
 <text x="-25.4" y="66.04" size="1.778" layer="88">VIN</text>
 <text x="-25.4" y="81.28" size="1.778" layer="88">VIN</text>
-<wire x1="-5.08" y1="66.04" x2="45.72" y2="66.04" width="0.8128" layer="94"/>
-<wire x1="45.72" y1="66.04" x2="45.72" y2="27.94" width="0.8128" layer="94"/>
-<wire x1="45.72" y1="27.94" x2="53.34" y2="27.94" width="0.8128" layer="94"/>
-<wire x1="53.34" y1="27.94" x2="53.34" y2="30.48" width="0.8128" layer="94"/>
+<wire x1="-5.08" y1="66.04" x2="45.72" y2="66.04" width="1.016" layer="94"/>
+<wire x1="45.72" y1="66.04" x2="45.72" y2="27.94" width="1.016" layer="94"/>
+<wire x1="45.72" y1="27.94" x2="53.34" y2="27.94" width="1.016" layer="94"/>
+<wire x1="53.34" y1="27.94" x2="53.34" y2="30.48" width="1.016" layer="94"/>
 <text x="-25.4" y="-7.62" size="1.778" layer="94">gnd</text>
 <text x="-25.4" y="-7.62" size="1.778" layer="94">gnd</text>
 <text x="-25.4" y="2.54" size="1.778" layer="94">gnd</text>
@@ -133,9 +169,33 @@
 <wire x1="-33.02" y1="45.72" x2="-33.02" y2="91.44" width="0.8128" layer="94"/>
 <wire x1="-33.02" y1="91.44" x2="63.5" y2="91.44" width="0.8128" layer="94"/>
 <wire x1="63.5" y1="91.44" x2="63.5" y2="60.96" width="0.8128" layer="94"/>
+<wire x1="45.72" y1="66.04" x2="119.38" y2="66.04" width="1.016" layer="94"/>
+<wire x1="119.38" y1="66.04" x2="119.38" y2="58.42" width="1.016" layer="94"/>
+<wire x1="68.58" y1="60.96" x2="68.58" y2="48.26" width="0.762" layer="90"/>
+<wire x1="68.58" y1="48.26" x2="127" y2="48.26" width="0.762" layer="90"/>
+<wire x1="127" y1="48.26" x2="127" y2="27.94" width="0.762" layer="90"/>
+<wire x1="73.66" y1="60.96" x2="73.66" y2="81.28" width="0.762" layer="93"/>
+<wire x1="73.66" y1="81.28" x2="124.46" y2="81.28" width="0.762" layer="93"/>
+<wire x1="124.46" y1="81.28" x2="124.46" y2="58.42" width="0.762" layer="93"/>
+<wire x1="55.88" y1="30.48" x2="55.88" y2="17.78" width="0.762" layer="95"/>
+<wire x1="55.88" y1="17.78" x2="132.08" y2="17.78" width="0.762" layer="95"/>
+<wire x1="132.08" y1="17.78" x2="132.08" y2="27.94" width="0.762" layer="95"/>
+<wire x1="119.38" y1="66.04" x2="218.44" y2="66.04" width="1.016" layer="94"/>
+<wire x1="218.44" y1="66.04" x2="218.44" y2="58.42" width="1.016" layer="94"/>
+<wire x1="152.4" y1="58.42" x2="152.4" y2="48.26" width="0.762" layer="93"/>
+<wire x1="152.4" y1="48.26" x2="226.06" y2="48.26" width="0.762" layer="93"/>
+<wire x1="132.08" y1="17.78" x2="231.14" y2="17.78" width="0.762" layer="96"/>
+<wire x1="231.14" y1="17.78" x2="231.14" y2="27.94" width="0.762" layer="96"/>
+<wire x1="226.06" y1="48.26" x2="226.06" y2="27.94" width="0.762" layer="93"/>
+<wire x1="119.38" y1="45.72" x2="218.44" y2="45.72" width="0.762" layer="93"/>
+<wire x1="218.44" y1="45.72" x2="218.44" y2="27.94" width="0.762" layer="93"/>
+<wire x1="124.46" y1="81.28" x2="223.52" y2="81.28" width="0.762" layer="93"/>
+<wire x1="223.52" y1="81.28" x2="223.52" y2="58.42" width="0.762" layer="93"/>
 </plain>
 <moduleinsts>
 <moduleinst name="HEF4050BT1" module="HEF4050BT" x="66.04" y="45.72"/>
+<moduleinst name="HEF4794BT1" module="HEF4794BT" x="139.7" y="43.18"/>
+<moduleinst name="HEF4794BT2" module="HEF4794BT" x="238.76" y="43.18"/>
 </moduleinsts>
 <instances>
 </instances>
@@ -157,12 +217,16 @@
 </bus>
 <bus name="B$4">
 <segment>
-<wire x1="-12.7" y1="-5.08" x2="66.04" y2="-5.08" width="0.762" layer="92"/>
-<wire x1="66.04" y1="-5.08" x2="73.66" y2="-5.08" width="0.762" layer="92"/>
-<wire x1="73.66" y1="-5.08" x2="78.74" y2="-5.08" width="0.762" layer="92"/>
-<wire x1="78.74" y1="-5.08" x2="78.74" y2="30.48" width="0.762" layer="92"/>
+<wire x1="-12.7" y1="-5.08" x2="66.04" y2="-5.08" width="1.016" layer="92"/>
+<wire x1="66.04" y1="-5.08" x2="73.66" y2="-5.08" width="1.016" layer="92"/>
+<wire x1="73.66" y1="-5.08" x2="78.74" y2="-5.08" width="1.016" layer="92"/>
+<wire x1="78.74" y1="-5.08" x2="78.74" y2="30.48" width="1.016" layer="92"/>
 <wire x1="73.66" y1="30.48" x2="73.66" y2="-5.08" width="0.762" layer="92"/>
 <wire x1="66.04" y1="30.48" x2="66.04" y2="-5.08" width="0.762" layer="92"/>
+<wire x1="78.74" y1="-5.08" x2="160.02" y2="-5.08" width="1.016" layer="92"/>
+<wire x1="160.02" y1="-5.08" x2="160.02" y2="27.94" width="1.016" layer="92"/>
+<wire x1="160.02" y1="-5.08" x2="259.08" y2="-5.08" width="1.016" layer="92"/>
+<wire x1="259.08" y1="-5.08" x2="259.08" y2="27.94" width="1.016" layer="92"/>
 </segment>
 </bus>
 <bus name="B$5">
@@ -214,6 +278,15 @@
 <wire x1="-33.02" y1="91.44" x2="63.5" y2="91.44" width="0.1524" layer="91"/>
 <portref moduleinst="HEF4050BT1" port="6A"/>
 <wire x1="63.5" y1="91.44" x2="63.5" y2="60.96" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<portref moduleinst="HEF4050BT1" port="6Y"/>
+<wire x1="58.42" y1="60.96" x2="58.42" y2="45.72" width="0.762" layer="91"/>
+<wire x1="58.42" y1="45.72" x2="119.38" y2="45.72" width="0.762" layer="91"/>
+<portref moduleinst="HEF4794BT1" port="STR"/>
+<wire x1="119.38" y1="45.72" x2="119.38" y2="27.94" width="0.762" layer="91"/>
 </segment>
 </net>
 </nets>

@@ -115,6 +115,10 @@
 <text x="-25.4" y="73.66" size="1.778" layer="88">VIN</text>
 <text x="-25.4" y="66.04" size="1.778" layer="88">VIN</text>
 <text x="-25.4" y="81.28" size="1.778" layer="88">VIN</text>
+<wire x1="-5.08" y1="66.04" x2="45.72" y2="66.04" width="0.8128" layer="94"/>
+<wire x1="45.72" y1="66.04" x2="45.72" y2="27.94" width="0.8128" layer="94"/>
+<wire x1="45.72" y1="27.94" x2="53.34" y2="27.94" width="0.8128" layer="94"/>
+<wire x1="53.34" y1="27.94" x2="53.34" y2="35.56" width="0.8128" layer="94"/>
 </plain>
 <moduleinsts>
 <moduleinst name="HEF4050BT1" module="HEF4050BT" x="66.04" y="45.72"/>
