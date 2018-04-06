@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.6.0">
+<eagle version="8.7.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -191,6 +191,10 @@
 <wire x1="218.44" y1="45.72" x2="218.44" y2="27.94" width="0.762" layer="93"/>
 <wire x1="124.46" y1="81.28" x2="223.52" y2="81.28" width="0.762" layer="93"/>
 <wire x1="223.52" y1="81.28" x2="223.52" y2="58.42" width="0.762" layer="93"/>
+<text x="1.524" y="54.864" size="3.81" layer="90">OE</text>
+<text x="1.778" y="32.512" size="3.81" layer="90">CP</text>
+<text x="-30.48" y="38.1" size="3.81" layer="90">STR</text>
+<text x="-27.94" y="55.88" size="3.81" layer="90">D</text>
 </plain>
 <moduleinsts>
 <moduleinst name="HEF4050BT1" module="HEF4050BT" x="66.04" y="45.72"/>
