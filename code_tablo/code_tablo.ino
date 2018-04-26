@@ -32,7 +32,10 @@ void dataUp() {
   stateD = 1;
   delay(1);
 }
-
+void cUD() {
+  clockUp();
+  clockDown();
+}
 
 void clockDown() {
   digitalWrite(CP, LOW);
@@ -47,30 +50,264 @@ void clockUp() {
   delay(100);
 }
 
+void numSend0() {
+  //--microchip 2 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  //--microchip 1 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+}
+void numSend9() {
+  //--microchip 2 --//
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  //--microchip 1 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+}
+
+void numSend8() {
+  //--microchip 2 --//
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  //--microchip 1 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+}
+
+void numSend7() {
+  //--microchip 2 --//
+  dataDown();
+  cUD();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+  cUD();
+  cUD();
+  //--microchip 1 --//
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+}
+void numSend6() {
+  //--microchip 2 --//
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  //--microchip 1 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+}
+
+void numSend5() {
+  //--microchip 2 --//
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  //--microchip 1 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+}
+void numSend4() {
+  //--microchip 2 --//
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+  cUD();
+  dataUp();
+  cUD();
+  dataDown();
+  cUD();
+  cUD();
+  //--microchip 1 --//
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+}
+
+void numSend3() {
+  //--microchip 2 --//
+  dataUp();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  //--microchip 1 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+}
+void numSend2() {
+  dataUp();
+  cUD();
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  //--microchip 1 --//
+  dataDown();
+  cUD();
+  dataUp();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  dataDown();
+  cUD();
+}
+
 void numSend1() {
   dataDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
+  //--microchip 1 --//
   dataUp();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
-  clockUp(); clockDown();
+  cUD();
+  cUD();
+  cUD();
+  cUD();
   dataDown();
-  clockUp(); clockDown();
+  cUD();
   dataUp();
-  clockUp(); clockDown();
+  cUD();
   dataDown();
-  clockUp(); clockDown();
+  cUD();
   dataUp();
-  clockUp(); clockDown();
-
+  cUD();
 }
 void setup() {
   Serial.begin(9600);
@@ -87,8 +324,25 @@ void setup() {
     clockUp();
     clockDown();
   }
+  numSend0();
+  delay(5000);
   numSend1();
-  numSend1();
+  delay(5000);
+  numSend2();
+  delay(5000);
+  numSend3();
+  delay(5000);
+  numSend4();
+  delay(5000);
+  numSend5();
+  delay(5000);
+  numSend6();
+  delay(5000);
+  numSend7();
+  delay(5000);
+  numSend8();
+  delay(5000);
+  numSend9();
 }
 
 void loop() {
