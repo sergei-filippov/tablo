@@ -17,7 +17,10 @@ bool stateCP = 0;
 bool stateLED = 0;
 long long a;
 char Day;
-int numberD;
+char Minute;
+char Second;
+char numberD;
+char finalDate = 31;
 
 
 void ledSend() {
@@ -28,18 +31,18 @@ void ledSend() {
     digitalWrite(LED, HIGH);
     stateLED = 1;
   }
-  delay(1);
+  // delay(1);
 }
 void dataDown() {
   digitalWrite(D, LOW);
   stateD = 0;
-  delay(1);
+  // delay(1);
 }
 
 void dataUp() {
   digitalWrite(D, HIGH);
   stateD = 1;
-  delay(1);
+  //delay(1);
 }
 void cUD() {
   clockUp();
@@ -50,14 +53,24 @@ void clockDown() {
   digitalWrite(CP, LOW);
   stateCP = 0;
   ledSend();
-  delay(100);
+  //delay(1);
 }
 
 void clockUp() {
   digitalWrite(CP, HIGH);
   stateCP = 1;
-  delay(100);
+  //delay(1);
 }
+
+
+void clearAll() {
+  dataDown();
+  for (char i = 0; i < 32; i++) {
+    clockUp();
+    clockDown();
+  }
+}
+
 void anyNum(int numberD) {
   switch (numberD) {
     case 0: numSend0(); break;
@@ -350,21 +363,18 @@ void setup() {
   pinMode(STR, OUTPUT);
   pinMode(CP, OUTPUT);
   pinMode(LED, OUTPUT);
+  clearAll();
 
-  dataDown();
-  for (char i = 0; i < 32; i++) {
-    clockUp();
-    clockDown();
-  }
 }
 
 void loop() {
   tmElements_t tm;
   if (RTC.read(tm)) {
-    Serial.println(tm.Day);
-    Day = tm.Day;
+
+    Serial.println(tm.Second);
+    Day = finalDate - tm.Second;
     anyNum(Day / 10);
     anyNum(Day % 10);
   }
-  delay(5000);
+  delay(1000);
 }
