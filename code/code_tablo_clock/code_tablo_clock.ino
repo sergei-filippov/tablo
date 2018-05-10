@@ -6,9 +6,9 @@
 
 
 const char D = 6;   //serial        *output
-const char OE = 3;  //output enable *output
-const char STR = 4; // strobe       *output
-const char CP = 7;  //clock         *output
+const char OE = 7;  //output enable *output
+const char STR = 8; // strobe       *output
+const char CP = 9;  //clock         *output
 const char LED = 13;
 bool stateD = 0;
 bool stateOE = 1;
@@ -371,10 +371,13 @@ void loop() {
   tmElements_t tm;
   if (RTC.read(tm)) {
 
-    Serial.println(tm.Second);
-    Day = finalDate - tm.Second;
+   // Serial.println(tm.Minute);
+   // Serial.println(tm.Second);
+   Day = 25 - tm.Day;
+    digitalWrite(STR, LOW);
     anyNum(Day / 10);
     anyNum(Day % 10);
+    digitalWrite(STR, HIGH);
   }
   delay(1000);
 }
