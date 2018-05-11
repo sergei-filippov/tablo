@@ -2,26 +2,34 @@
 #include <TimeLib.h>
 #include <Wire.h>
 
-
-
-
-const char D = 6;   //serial        *output
-const char OE = 7;  //output enable *output
-const char STR = 8; // strobe       *output
-const char CP = 9;  //clock         *output
+const char D = 6;   //serial            *output
+const char OE = 7;  //output enable     *output
+const char STR = 8; // strobe           *output
+const char CP = 9;  //clock             *output
+const char PhR = A1; // photoresistor   *input
 const char LED = 13;
+
 bool stateD = 0;
 bool stateOE = 1;
 bool stateSTR = 1;
 bool stateCP = 0;
 bool stateLED = 0;
+
 long long a;
 char Day;
 char Minute;
 char Second;
 char numberD;
 char finalDate = 31;
+char ledBright; 
+char outerBright;
 
+
+void brightness(){
+  outerBright = analogRead(PhR);
+  analogWrite(OE,outerBright );     // WITH LESS VALUE COMES MORE BRIGHTNESS
+ // Serial.println(outerBright);
+}
 
 void ledSend() {
   if (stateLED) {
@@ -33,6 +41,7 @@ void ledSend() {
   }
   // delay(1);
 }
+
 void dataDown() {
   digitalWrite(D, LOW);
   stateD = 0;
@@ -40,7 +49,7 @@ void dataDown() {
 }
 
 void dataUp() {
-  digitalWrite(D, HIGH);
+ digitalWrite(D, HIGH);
   stateD = 1;
   //delay(1);
 }
@@ -363,15 +372,21 @@ void setup() {
   pinMode(STR, OUTPUT);
   pinMode(CP, OUTPUT);
   pinMode(LED, OUTPUT);
+
+  pinMode(PhR, INPUT);
+  
   clearAll();
+
+  
 
 }
 
 void loop() {
+ // brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
 
-   // Serial.println(tm.Minute);
+    Serial.println(tm.Minute);
    // Serial.println(tm.Second);
    Day = 25 - tm.Day;
     digitalWrite(STR, LOW);
