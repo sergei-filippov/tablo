@@ -2,6 +2,7 @@
 #include <TimeLib.h>
 #include <Wire.h>
 
+
 const char D = 6;   //serial            *output
 const char OE = 7;  //output enable     *output
 const char STR = 8; // strobe           *output
@@ -22,13 +23,13 @@ char Second;
 char numberD;
 char finalDate = 31;
 char ledBright; 
-char outerBright;
+int outerBright;
 
 
 void brightness(){
   outerBright = analogRead(PhR);
-  analogWrite(OE,outerBright );     // WITH LESS VALUE COMES MORE BRIGHTNESS
- // Serial.println(outerBright);
+  Serial.println(outerBright);
+  analogWrite(OE,outerBright);     // WITH LESS VALUE COMES MORE BRIGHTNESS
 }
 
 void ledSend() {
@@ -382,11 +383,11 @@ void setup() {
 }
 
 void loop() {
- // brightness();
+  brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
 
-    Serial.println(tm.Minute);
+  //  Serial.println(tm.Minute);
    // Serial.println(tm.Second);
    Day = 25 - tm.Day;
     digitalWrite(STR, LOW);
