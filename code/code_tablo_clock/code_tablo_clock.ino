@@ -9,12 +9,14 @@ const char STR = 8; // strobe           *output
 const char CP = 9;  //clock             *output
 const char PhR = A1; // photoresistor   *input
 const char LED = 13;
+const char BRIGHT_MODE = 4; // pin for brightness
 
 bool stateD = 0;
 bool stateOE = 1;
 bool stateSTR = 1;
 bool stateCP = 0;
 bool stateLED = 0;
+const char stateBRIGHT_MODE = 4;
 
 long long a;
 char Day;
@@ -22,14 +24,14 @@ char Minute;
 char Second;
 char numberD;
 char finalDate = 31;
-char ledBright; 
+char ledBright;
 int outerBright;
 
 
-void brightness(){
-  outerBright = analogRead(PhR);
+void brightness() {
+  outerBright = analogRead(PhR )/4;
   Serial.println(outerBright);
-  analogWrite(OE,outerBright);     // WITH LESS VALUE COMES MORE BRIGHTNESS
+  analogWrite(OE, 255 - outerBright);    // WITH LESS VALUE COMES MORE BRIGHTNESS
 }
 
 void ledSend() {
@@ -50,7 +52,7 @@ void dataDown() {
 }
 
 void dataUp() {
- digitalWrite(D, HIGH);
+  digitalWrite(D, HIGH);
   stateD = 1;
   //delay(1);
 }
@@ -368,6 +370,9 @@ void print2digits(int number) {
 void setup() {
   Serial.begin(9600);
 
+  pinMode(BRIGHT_MODE, OUTPUT);
+  digitalWrite(BRIGHT_MODE, HIGH);
+
   pinMode(D, OUTPUT);
   pinMode(OE, OUTPUT);
   pinMode(STR, OUTPUT);
@@ -375,21 +380,19 @@ void setup() {
   pinMode(LED, OUTPUT);
 
   pinMode(PhR, INPUT);
-  
+
   clearAll();
-
-  
-
 }
 
 void loop() {
   brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
-
-  //  Serial.println(tm.Minute);
-   // Serial.println(tm.Second);
-   Day = 25 - tm.Day;
+   /* Serial.println(tm.Second);
+    Serial.println(tm.Minute);
+    Serial.println(tm.Hour);
+    Serial.println(tm.Day);*/
+    Day = 31 - tm.Day;
     digitalWrite(STR, LOW);
     anyNum(Day / 10);
     anyNum(Day % 10);
