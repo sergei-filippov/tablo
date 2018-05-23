@@ -1,3 +1,4 @@
+#include <avr/wdt.h>
 #include <DS1307RTC.h>
 #include <TimeLib.h>
 #include <Wire.h>
@@ -385,7 +386,7 @@ void setup() {
 }
 
 void loop() {
-  brightness();
+ // brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
    /* Serial.println(tm.Second);
