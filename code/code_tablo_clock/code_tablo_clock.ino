@@ -4,13 +4,14 @@
 #include <Wire.h>
 
 
-const char D = 6;   //serial            *output
-const char OE = 7;  //output enable     *output
+const char D = 5;   //serial            *output
+const char OE = 6;  //output enable     *output
 const char STR = 8; // strobe           *output
 const char CP = 9;  //clock             *output
 const char PhR = A1; // photoresistor   *input
 const char LED = 13;
 const char BRIGHT_MODE = 4; // pin for brightness
+const char BUZZER = 11;
 
 bool stateD = 0;
 bool stateOE = 1;
@@ -26,13 +27,24 @@ char Second;
 char numberD;
 char finalDate = 31;
 char ledBright;
-int outerBright;
+int outerBright = 0;
 
+void buzz() {
+  digitalWrite(BUZZER, HIGH);
+  delayMicroseconds(500);
+  digitalWrite(BUZZER, LOW);
+  delayMicroseconds(500);
+}
 
 void brightness() {
-  outerBright = analogRead(PhR )/4;
-  Serial.println(outerBright);
-  analogWrite(OE, 255 - outerBright);    // WITH LESS VALUE COMES MORE BRIGHTNESS
+  outerBright = analogRead(PhR ) / 4;
+  if ( outerBright > 230) {
+    analogWrite(OE, 0);
+  } else {
+    analogWrite(OE, 255 - outerBright);    // WITH LESS VALUE COMES MORE BRIGHTNESS*/
+  }
+  Serial.println( outerBright);
+
 }
 
 void ledSend() {
@@ -373,7 +385,7 @@ void setup() {
 
   pinMode(BRIGHT_MODE, OUTPUT);
   digitalWrite(BRIGHT_MODE, HIGH);
-
+  pinMode(BUZZER, OUTPUT);
   pinMode(D, OUTPUT);
   pinMode(OE, OUTPUT);
   pinMode(STR, OUTPUT);
@@ -383,16 +395,21 @@ void setup() {
   pinMode(PhR, INPUT);
 
   clearAll();
+  for (int i = 0; i < 10000; i++) {
+    buzz();
+  }
+
+  wdt_enable (WDTO_8S);
 }
 
 void loop() {
- // brightness();
+  brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
-   /* Serial.println(tm.Second);
-    Serial.println(tm.Minute);
-    Serial.println(tm.Hour);
-    Serial.println(tm.Day);*/
+    /* Serial.println(tm.Second);
+      Serial.println(tm.Minute);
+      Serial.println(tm.Hour);
+      Serial.println(tm.Day);*/
     Day = 31 - tm.Day;
     digitalWrite(STR, LOW);
     anyNum(Day / 10);
@@ -400,4 +417,7 @@ void loop() {
     digitalWrite(STR, HIGH);
   }
   delay(1000);
+
+
+  wdt_reset();  // resets watchdog count every loop
 }
