@@ -43,7 +43,7 @@ void brightness() {
   } else {
     analogWrite(OE, 255 - outerBright);    // WITH LESS VALUE COMES MORE BRIGHTNESS*/
   }
-  Serial.println( outerBright);
+ // Serial.println( outerBright);
 
 }
 
@@ -395,7 +395,7 @@ void setup() {
   pinMode(PhR, INPUT);
 
   clearAll();
-  for (int i = 0; i < 10000; i++) {
+  for (int i = 0; i < 5000; i++) {
     buzz();
   }
 
@@ -406,10 +406,10 @@ void loop() {
   brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
-    /* Serial.println(tm.Second);
+     Serial.println(tm.Second);
       Serial.println(tm.Minute);
       Serial.println(tm.Hour);
-      Serial.println(tm.Day);*/
+      Serial.println(tm.Day);
     Day = 31 - tm.Day;
     digitalWrite(STR, LOW);
     anyNum(Day / 10);
