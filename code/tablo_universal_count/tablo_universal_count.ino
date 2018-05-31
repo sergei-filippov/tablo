@@ -25,9 +25,23 @@ char Day;
 char Minute;
 char Second;
 char numberD;
-char finalDate = 31;
+int finalDate;  // from the 1 January
 char ledBright;
 int outerBright = 0;
+
+const int daysInMonth[] {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};  
+int day01, day10, month01, month10;
+int today;  // from the 1 January
+int daysBefore;  //Beforeee finalDate
+
+int date2day(int day_num, int month_num) {    // transforms date "day.month" to number of days since the 1st January
+  int days = 0;
+  for (int i = 1; i < month_num; i++) {
+    days += daysInMonth[i];
+  }
+  days += day_num;
+  return days;
+}
 
 void buzz() {
   digitalWrite(BUZZER, HIGH);
@@ -43,7 +57,7 @@ void brightness() {
   } else {
     analogWrite(OE, 255 - outerBright);    // WITH LESS VALUE COMES MORE BRIGHTNESS*/
   }
- // Serial.println( outerBright);
+  // Serial.println( outerBright);
 
 }
 
@@ -394,11 +408,18 @@ void setup() {
 
   pinMode(PhR, INPUT);
 
+  day10 = 0;
+  day01 = 3;
+  month10 = 0;
+  month01 = 9;
+  finalDate = date2day(day10 * 10 + day01, month10 * 10 + month01);
+
+  // Serial.println(finalDate);
+
   clearAll();
   for (int i = 0; i < 5000; i++) {
     buzz();
   }
-
   wdt_enable (WDTO_8S);
 }
 
@@ -406,15 +427,16 @@ void loop() {
   brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
-   /*  Serial.println(tm.Second);
-      Serial.println(tm.Minute);
-      Serial.println(tm.Hour);
-      Serial.println(tm.Day);*/
-      Serial.println(tm.sysTime());
-    Day = 31 - tm.Day;
+    /*  Serial.println(tm.Second);
+       Serial.println(tm.Minute);
+       Serial.println(tm.Hour);
+       Serial.println(tm.Day);*/
+    today = date2day(tm.Day, tm.Month);    // since the 1st January
+    //Serial.println(today);
+    daysBefore = finalDate - today;                // how many days Before the final date
     digitalWrite(STR, LOW);
-    anyNum(Day / 10);
-    anyNum(Day % 10);
+    anyNum(daysBefore / 10);
+    anyNum(daysBefore % 10);
     digitalWrite(STR, HIGH);
   }
   delay(1000);
