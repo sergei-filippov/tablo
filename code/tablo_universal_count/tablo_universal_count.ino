@@ -424,7 +424,7 @@ void setup() {
 }
 
 void loop() {
-  brightness();
+ // brightness();
   tmElements_t tm;
   if (RTC.read(tm)) {
     /*  Serial.println(tm.Second);
