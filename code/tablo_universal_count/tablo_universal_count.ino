@@ -12,6 +12,7 @@ const char PhR = A1; // photoresistor   *input
 const char LED = 13;
 const char BRIGHT_MODE = 4; // pin for brightness
 const char BUZZER = 11;
+const char PUMP = 7; // pump to water the plant
 
 bool stateD = 0;
 bool stateOE = 1;
@@ -33,6 +34,7 @@ const int daysInMonth[] {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 int day01, day10, month01, month10;
 int today;  // from the 1 January
 int daysBefore;  //Beforeee finalDate
+int realDay;  // for rain
 
 int date2day(int day_num, int month_num) {    // transforms date "day.month" to number of days since the 1st January
   int days = 0;
@@ -393,6 +395,13 @@ void print2digits(int number) {
   Serial.print(number);
 }
 
+void rain(){                     // turns on the pump to water the plant
+  digitalWrite(PUMP, HIGH);
+  delay(7000);
+  digitalWrite(PUMP, LOW);
+  
+}
+
 
 void setup() {
   Serial.begin(9600);
@@ -405,6 +414,8 @@ void setup() {
   pinMode(STR, OUTPUT);
   pinMode(CP, OUTPUT);
   pinMode(LED, OUTPUT);
+  
+  pinMode(PUMP, OUTPUT);
 
   pinMode(PhR, INPUT);
 
@@ -426,11 +437,12 @@ void setup() {
 void loop() {
  // brightness();
   tmElements_t tm;
+  realDay = tm.Day;
   if (RTC.read(tm)) {
-    /*  Serial.println(tm.Second);
+      Serial.println(tm.Second);
        Serial.println(tm.Minute);
        Serial.println(tm.Hour);
-       Serial.println(tm.Day);*/
+       Serial.println(tm.Day);
     today = date2day(tm.Day, tm.Month);    // since the 1st January
     //Serial.println(today);
     daysBefore = finalDate - today;                // how many days Before the final date
@@ -438,7 +450,12 @@ void loop() {
     anyNum(daysBefore / 10);
     anyNum(daysBefore % 10);
     digitalWrite(STR, HIGH);
+    
+    if(realDay!=tm.Day){
+      rain();
+    }
   }
+  
   delay(1000);
 
 
