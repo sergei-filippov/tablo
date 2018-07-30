@@ -12,7 +12,8 @@ const char PhR = A1; // photoresistor   *input
 const char LED = 13;
 const char BRIGHT_MODE = 4; // pin for brightness
 const char BUZZER = 11;
-const char PUMP = 7; // pump to water the plant
+const char PUMP = 3; // pump to water the plant
+const char V5 = 7;    // 5v pin
 
 bool stateD = 0;
 bool stateOE = 1;
@@ -30,7 +31,7 @@ int finalDate;  // from the 1 January
 char ledBright;
 int outerBright = 0;
 
-const int daysInMonth[] {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};  
+const int daysInMonth[] {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 int day01, day10, month01, month10;
 int today;  // from the 1 January
 int daysBefore;  //Beforeee finalDate
@@ -395,11 +396,13 @@ void print2digits(int number) {
   Serial.print(number);
 }
 
-void rain(){                     // turns on the pump to water the plant
-  digitalWrite(PUMP, HIGH);
-  delay(7000);
-  digitalWrite(PUMP, LOW);
-  
+void rain() {                    // turns on the pump to water the plant
+  for (int i = 0; i < 10; i++) {
+    digitalWrite(PUMP, LOW);    // INVERTION
+    delay(7000);
+    digitalWrite(PUMP, HIGH);
+    wdt_reset();  // resets watchdog count every loop
+  }
 }
 
 
@@ -414,8 +417,10 @@ void setup() {
   pinMode(STR, OUTPUT);
   pinMode(CP, OUTPUT);
   pinMode(LED, OUTPUT);
-  
+
   pinMode(PUMP, OUTPUT);
+  pinMode(V5, OUTPUT);
+  digitalWrite(V5, HIGH);
 
   pinMode(PhR, INPUT);
 
@@ -435,14 +440,14 @@ void setup() {
 }
 
 void loop() {
- // brightness();
+  // brightness();
   tmElements_t tm;
   realDay = tm.Day;
   if (RTC.read(tm)) {
-      Serial.println(tm.Second);
-       Serial.println(tm.Minute);
-       Serial.println(tm.Hour);
-       Serial.println(tm.Day);
+    Serial.println(tm.Second);
+    Serial.println(tm.Minute);
+    Serial.println(tm.Hour);
+    Serial.println(tm.Day);
     today = date2day(tm.Day, tm.Month);    // since the 1st January
     //Serial.println(today);
     daysBefore = finalDate - today;                // how many days Before the final date
@@ -450,12 +455,12 @@ void loop() {
     anyNum(daysBefore / 10);
     anyNum(daysBefore % 10);
     digitalWrite(STR, HIGH);
-    
+
     if(realDay!=tm.Day){
-      rain();
-    }
+    rain();
+     }
   }
-  
+
   delay(1000);
 
 
