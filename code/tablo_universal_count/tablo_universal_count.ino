@@ -35,7 +35,9 @@ const int daysInMonth[] {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 int day01, day10, month01, month10;
 int today;  // from the 1 January
 int daysBefore;  //Beforeee finalDate
-int realDay;  // for rain
+
+int realHour = 0; // for rain 
+bool flagtime = 1;  // for rain
 
 int date2day(int day_num, int month_num) {    // transforms date "day.month" to number of days since the 1st January
   int days = 0;
@@ -397,11 +399,13 @@ void print2digits(int number) {
 }
 
 void rain() {                    // turns on the pump to water the plant
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 1; i++) {
+    digitalWrite(BUZZER, HIGH);
     digitalWrite(PUMP, LOW);    // INVERTION
-    delay(7000);
+    delay(6000);
     digitalWrite(PUMP, HIGH);
-    wdt_reset();  // resets watchdog count every loop
+    digitalWrite(BUZZER, LOW);
+    //wdt_reset();  // resets watchdog count every loop  // necessary if more then 8 seconds
   }
 }
 
@@ -440,14 +444,21 @@ void setup() {
 }
 
 void loop() {
+
   // brightness();
   tmElements_t tm;
-  realDay = tm.Day;
+
+  if (realHour < tm.Hour - 1) { // if day has changed
+    flagtime = 1;
+    rain();
+  }
+
+
   if (RTC.read(tm)) {
-    Serial.println(tm.Second);
-    Serial.println(tm.Minute);
-    Serial.println(tm.Hour);
-    Serial.println(tm.Day);
+    /*  Serial.println(tm.Second);
+      Serial.println(tm.Minute);
+      Serial.println(tm.Hour);
+      Serial.println(tm.Day);*/
     today = date2day(tm.Day, tm.Month);    // since the 1st January
     //Serial.println(today);
     daysBefore = finalDate - today;                // how many days Before the final date
@@ -456,13 +467,19 @@ void loop() {
     anyNum(daysBefore % 10);
     digitalWrite(STR, HIGH);
 
-    if(realDay!=tm.Day){
-    rain();
-     }
+    if (flagtime) {
+      realHour = tm.Hour;
+      flagtime = 0;
+    }
   }
 
-  delay(1000);
+
+ Serial.print(realHour);
+  Serial.print(" ");
+  Serial.println(tm.Hour);
+
+delay(1000);
 
 
-  wdt_reset();  // resets watchdog count every loop
+wdt_reset();  // resets watchdog count every loop
 }
