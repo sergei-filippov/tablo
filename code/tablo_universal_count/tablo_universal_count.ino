@@ -36,7 +36,7 @@ int day01, day10, month01, month10;
 int today;  // from the 1 January
 int daysBefore;  //Beforeee finalDate
 
-int realHour = 0; // for rain 
+int realHour = 24; // for rain
 bool flagtime = 1;  // for rain
 
 int date2day(int day_num, int month_num) {    // transforms date "day.month" to number of days since the 1st January
@@ -402,9 +402,11 @@ void rain() {                    // turns on the pump to water the plant
   for (int i = 0; i < 1; i++) {
     digitalWrite(BUZZER, HIGH);
     digitalWrite(PUMP, LOW);    // INVERTION
-    delay(6000);
-    digitalWrite(PUMP, HIGH);
+    delay(500);
     digitalWrite(BUZZER, LOW);
+    delay(5500);
+    digitalWrite(PUMP, HIGH);
+    
     //wdt_reset();  // resets watchdog count every loop  // necessary if more then 8 seconds
   }
 }
@@ -424,7 +426,9 @@ void setup() {
 
   pinMode(PUMP, OUTPUT);
   pinMode(V5, OUTPUT);
+  digitalWrite(PUMP, HIGH);
   digitalWrite(V5, HIGH);
+
 
   pinMode(PhR, INPUT);
 
@@ -437,49 +441,55 @@ void setup() {
   // Serial.println(finalDate);
 
   clearAll();
-  for (int i = 0; i < 5000; i++) {
+  for (int i = 0; i < 1000; i++) {
     buzz();
   }
-  wdt_enable (WDTO_8S);
+  wdt_enable (WDTO_8S);   // watchdog
+  // RTC.read(tm);           // read RTC
 }
 
 void loop() {
-
-  // brightness();
   tmElements_t tm;
+  RTC.read(tm);
+  // brightness();
 
-  if (realHour < tm.Hour - 1) { // if day has changed
+  Serial.print(realHour);
+  Serial.print(" ");
+  Serial.println(tm.Hour);
+
+  if (realHour < tm.Hour-1) { // if day has changed
     flagtime = 1;
     rain();
   }
 
 
-  if (RTC.read(tm)) {
-    /*  Serial.println(tm.Second);
-      Serial.println(tm.Minute);
-      Serial.println(tm.Hour);
-      Serial.println(tm.Day);*/
-    today = date2day(tm.Day, tm.Month);    // since the 1st January
-    //Serial.println(today);
-    daysBefore = finalDate - today;                // how many days Before the final date
-    digitalWrite(STR, LOW);
-    anyNum(daysBefore / 10);
-    anyNum(daysBefore % 10);
-    digitalWrite(STR, HIGH);
 
-    if (flagtime) {
-      realHour = tm.Hour;
-      flagtime = 0;
-    }
+  /*  Serial.println(tm.Second);
+    Serial.println(tm.Minute);
+    Serial.println(tm.Hour);
+    Serial.println(tm.Day);*/
+  today = date2day(tm.Day, tm.Month);    // since the 1st January
+  //Serial.println(today);
+  daysBefore = finalDate - today;                // how many days Before the final date
+  digitalWrite(STR, LOW);
+  anyNum(daysBefore / 10);
+  anyNum(daysBefore % 10);
+  digitalWrite(STR, HIGH);
+
+  if (flagtime) {
+    realHour = tm.Hour;
+
+    flagtime = 0;
+  }
+  if (tm.Hour == 0) {
+    realHour = 0;
   }
 
 
- Serial.print(realHour);
-  Serial.print(" ");
-  Serial.println(tm.Hour);
-
-delay(1000);
 
 
-wdt_reset();  // resets watchdog count every loop
+  delay(1000);
+
+
+  wdt_reset();  // resets watchdog count every loop
 }
