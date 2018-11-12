@@ -404,7 +404,7 @@ void rain() {                    // turns on the pump to water the plant
     digitalWrite(PUMP, LOW);    // INVERTION
     delay(500);
     digitalWrite(BUZZER, LOW);
-    delay(5500);
+    delay(33000);
     digitalWrite(PUMP, HIGH);
     
     //wdt_reset();  // resets watchdog count every loop  // necessary if more then 8 seconds
@@ -432,13 +432,13 @@ void setup() {
 
   pinMode(PhR, INPUT);
 
-  day10 = 0;
-  day01 = 3;
-  month10 = 0;
-  month01 = 9;
+  day10 = 2;
+  day01 = 8;
+  month10 = 1;
+  month01 = 2;
   finalDate = date2day(day10 * 10 + day01, month10 * 10 + month01);
 
-  // Serial.println(finalDate);
+   Serial.println(finalDate);
 
   clearAll();
   for (int i = 0; i < 1000; i++) {
@@ -455,9 +455,11 @@ void loop() {
 
   Serial.print(realHour);
   Serial.print(" ");
-  Serial.println(tm.Hour);
+  Serial.print(tm.Hour);
+  Serial.print(" Minute-");
+  Serial.println(tm.Minute);
 
-  if (realHour < tm.Hour-1) { // if day has changed
+  if (realHour < tm.Hour-11) { // every 12 hours 
     flagtime = 1;
     rain();
   }
@@ -469,8 +471,9 @@ void loop() {
     Serial.println(tm.Hour);
     Serial.println(tm.Day);*/
   today = date2day(tm.Day, tm.Month);    // since the 1st January
-  //Serial.println(today);
-  daysBefore = finalDate - today;                // how many days Before the final date
+  Serial.println(today);
+  daysBefore = finalDate - today;    // how many days Before the final date
+   Serial.println( daysBefore); 
   digitalWrite(STR, LOW);
   anyNum(daysBefore / 10);
   anyNum(daysBefore % 10);
