@@ -1,7 +1,8 @@
+
 #include <avr/wdt.h>
 #include <DS1307RTC.h>
 #include <TimeLib.h>
-#include <Wire.h>
+//#include <Wire.h>
 
 
 const char D = 5;   //serial            *output
@@ -390,13 +391,23 @@ void numSend1() {
   cUD();
 }
 
-
-void print2digits(int number) {
-  if (number >= 0 && number < 10) {
-    Serial.write('0');
-  }
-  Serial.print(number);
+void printNow(tmElements_t tm){
+    Serial.print("Ok, Time = ");
+    Serial.print(tm.Hour);
+    Serial.write(':');
+    Serial.print(tm.Minute);
+    Serial.write(':');
+    Serial.print(tm.Second);
+    Serial.print(", Date (D/M/Y) = ");
+    Serial.print(tm.Day);
+    Serial.write('/');
+    Serial.print(tm.Month);
+    Serial.write('/');
+    Serial.print(tmYearToCalendar(tm.Year));
+    Serial.println();
 }
+
+
 
 void rain() {                    // turns on the pump to water the plant
   for (int i = 0; i < 1; i++) {
@@ -404,7 +415,7 @@ void rain() {                    // turns on the pump to water the plant
     digitalWrite(PUMP, LOW);    // INVERTION
     delay(500);
     digitalWrite(BUZZER, LOW);
-    delay(33000);
+    delay(5000);
     digitalWrite(PUMP, HIGH);
     
     //wdt_reset();  // resets watchdog count every loop  // necessary if more then 8 seconds
@@ -438,7 +449,7 @@ void setup() {
   month01 = 2;
   finalDate = date2day(day10 * 10 + day01, month10 * 10 + month01);
 
-   Serial.println(finalDate);
+  /// Serial.println(finalDate);
 
   clearAll();
   for (int i = 0; i < 1000; i++) {
@@ -447,50 +458,39 @@ void setup() {
   wdt_enable (WDTO_8S);   // watchdog
   // RTC.read(tm);           // read RTC
 }
-
+ 
 void loop() {
-  tmElements_t tm;
+ tmElements_t tm;
   RTC.read(tm);
   // brightness();
 
-  Serial.print(realHour);
-  Serial.print(" ");
-  Serial.print(tm.Hour);
-  Serial.print(" Minute-");
-  Serial.println(tm.Minute);
 
-  if (realHour < tm.Hour-11) { // every 12 hours 
+  if (realHour < tm.Hour-1) { // every 1 hours 
     flagtime = 1;
     rain();
   }
 
-
-
-  /*  Serial.println(tm.Second);
-    Serial.println(tm.Minute);
-    Serial.println(tm.Hour);
-    Serial.println(tm.Day);*/
+   
+    
   today = date2day(tm.Day, tm.Month);    // since the 1st January
-  Serial.println(today);
+ // Serial.println(today);
   daysBefore = finalDate - today;    // how many days Before the final date
-   Serial.println( daysBefore); 
+ //  Serial.println( daysBefore); 
   digitalWrite(STR, LOW);
   anyNum(daysBefore / 10);
   anyNum(daysBefore % 10);
   digitalWrite(STR, HIGH);
 
   if (flagtime) {
-    realHour = tm.Hour;
-
+    realHour = tm.Hour;   
     flagtime = 0;
   }
+  
   if (tm.Hour == 0) {
     realHour = 0;
   }
 
-
-
-
+  printNow(tm);
   delay(1000);
 
 
